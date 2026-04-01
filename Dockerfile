@@ -2,21 +2,19 @@ FROM node:20-alpine AS backend-build
 WORKDIR /app/backend
 
 COPY backend/package.json backend/package-lock.json ./
-RUN npm install
-
 COPY backend/tsconfig.json ./
 COPY backend/src ./src
+RUN npm install
 RUN npm run build
 
 FROM node:20-alpine AS frontend-build
 WORKDIR /app/frontend
 
 COPY frontend/package.json frontend/package-lock.json ./
-RUN npm install
-
 COPY frontend/tsconfig.json frontend/next.config.ts frontend/postcss.config.mjs frontend/tailwind.config.ts ./
 COPY frontend/public ./public
 COPY frontend/src ./src
+RUN npm install
 RUN npm run build
 
 FROM node:20-alpine AS runtime
