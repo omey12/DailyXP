@@ -11,6 +11,6 @@ const HabitsTrackingSchema = new Schema({
   },
 });
 
-HabitsTrackingSchema.index({ habitId: 1, date: 1 }, { unique: true });
+HabitsTrackingSchema.index({ UserId: 1, habitId: 1, date: 1 }, { unique: true });
 
 export default model("HabitsTracking", HabitsTrackingSchema);

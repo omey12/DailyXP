@@ -273,7 +273,7 @@ export default function HabitGrid() {
         },
         body: JSON.stringify({
           habitId,
-          date: selectedDate,
+          date: selectedDate.toISOString(),
           status: nextStatus,
         }),
       });

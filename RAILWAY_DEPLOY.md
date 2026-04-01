@@ -23,6 +23,7 @@
 
 - `backend/.env.example` and `frontend/.env.example` are included for reference.
 - The backend now waits for a successful database connection before listening for requests.
+- Use `npm start` to run the services in production. Do not use `npm star`.
 - If you deploy both services, make sure the frontend `NEXT_PUBLIC_SERVER_URL` points to the deployed Railway backend URL.
 
 ## Docker deployment (single Railway container)

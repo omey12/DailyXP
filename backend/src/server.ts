@@ -1,8 +1,13 @@
+import path from "path";
 import dotenv from "dotenv";
 import app from "./app";
 import { connectDB } from "./config/db";
 
-dotenv.config();
+const envPath = path.resolve(__dirname, "../.env");
+dotenv.config({ path: envPath, override: true });
+
+const uriDisplay = process.env.MONGO_URI?.replace(/(mongodb(?:\+srv)?:\/\/)([^:]+):([^@]+)@/, "$1***:***@");
+console.log("Loaded MONGO_URI:", uriDisplay ?? "<not set>");
 
 const start = async () => {
   await connectDB();
