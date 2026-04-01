@@ -1,5 +1,6 @@
 FROM node:20-alpine AS backend-build
 WORKDIR /app/backend
+ENV npm_config_update_notifier=false
 
 COPY backend/package.json backend/package-lock.json ./
 COPY backend/tsconfig.json ./
@@ -9,6 +10,7 @@ RUN npm run build
 
 FROM node:20-alpine AS frontend-build
 WORKDIR /app/frontend
+ENV npm_config_update_notifier=false
 
 COPY frontend/package.json frontend/package-lock.json ./
 COPY frontend/tsconfig.json frontend/next.config.ts frontend/postcss.config.mjs frontend/tailwind.config.ts ./
