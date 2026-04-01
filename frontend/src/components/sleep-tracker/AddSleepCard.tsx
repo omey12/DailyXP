@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { on } from "events";
+import { getApiUrl } from "@/lib/api";
 import { toast } from "@/hooks/use-toast";
 
 export default function AddSleepCard({
@@ -31,7 +32,7 @@ export default function AddSleepCard({
   const postSleepData = async () => {
     if (!sleepHours || !isValid) return;
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}api/sleepTrackers`, {
+      const res = await fetch(getApiUrl("/api/sleepTrackers"), {
         method: "POST",
         headers: {
           "content-type": "application/json",

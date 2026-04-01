@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { getApiUrl } from "@/lib/api";
 import AddSleepCard from "./AddSleepCard";
 import SleepStats from "./SleepStats";
 import SleepChart from "./SleepChart";
@@ -51,14 +52,11 @@ export default function SleepPage() {
   useEffect(() => {
     const fetchSleepData = async () => {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}api/sleepTrackers`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+        const res = await fetch(getApiUrl("/api/sleepTrackers"), {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        );
+        });
 
         if (!res.ok) throw new Error("Failed to fetch sleep data");
 

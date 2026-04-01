@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
+import { getApiUrl } from "@/lib/api";
 import { toast } from "@/hooks/use-toast";
 
 export default function AddHabitDialog({
@@ -23,21 +24,18 @@ export default function AddHabitDialog({
       return;
     }
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}api/habits`,
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({
-            name: title,
-            status: "pending",
-            date: new Date().toISOString(),
-          }),
+      const res = await fetch(getApiUrl("/api/habits"), {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      );
+        body: JSON.stringify({
+          name: title,
+          status: "pending",
+          date: new Date().toISOString(),
+        }),
+      });
 
       if (res.status == 401) {
         toast({

@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getApiUrl } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import AddHabitDialog from "./AddHabitDialog";
@@ -112,14 +113,11 @@ export default function HabitGrid() {
 
   const fetchTracking = useCallback(async () => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}api/habits/tracking/month?month=${month}&year=${year}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+      const res = await fetch(getApiUrl(`/api/habits/tracking/month?month=${month}&year=${year}`), {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      );
+      });
 
       if (!res.ok) throw new Error("Failed to fetch tracking");
 
@@ -154,14 +152,11 @@ export default function HabitGrid() {
       }
 
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}api/habits`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+        const res = await fetch(getApiUrl("/api/habits"), {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        );
+        });
 
         if (!res.ok) throw new Error("Failed to fetch habits");
 
@@ -217,15 +212,12 @@ export default function HabitGrid() {
     }
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}api/habits/${deleteConfirm.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+      const res = await fetch(getApiUrl(`/api/habits/${deleteConfirm.id}`), {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      );
+      });
 
       if (!res.ok) throw new Error("Failed to delete habit");
 
@@ -273,21 +265,18 @@ export default function HabitGrid() {
     try {
       const selectedDate = new Date(year, month, day);
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}api/habits/tracking`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({
-            habitId,
-            date: selectedDate,
-            status: nextStatus,
-          }),
+      const res = await fetch(getApiUrl("/api/habits/tracking"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      );
+        body: JSON.stringify({
+          habitId,
+          date: selectedDate,
+          status: nextStatus,
+        }),
+      });
 
       if (!res.ok) throw new Error("Failed to update habit tracking");
 
